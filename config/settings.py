@@ -1,14 +1,12 @@
 import os
 from flask import Flask, g, url_for, request, redirect, flash
 from flask_admin import Admin, AdminIndexView, expose
-# from flask_graphql_auth import GraphQLAuth
 from flask_migrate import Migrate
 from flask_login import LoginManager, current_user
-# from graphene_file_upload.flask import FileUploadGraphQLView
+
 
 from auth.models import User
 from config.database import db
-# from .schema import schema
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -45,24 +43,12 @@ migrate = Migrate(app, db)
 def before_req():
     g.user = current_user
     
-# create tables before first request
-# @app.before_first_request
-# def init_db():
-#     db_session.
-#     db_session.commit()
 
 
 @login_manager.user_loader
 def user_loader(id):
     return User.query.get(int(id))
 
-
-# app.add_url_rule("/graphql",
-#                  view_func=FileUploadGraphQLView.as_view(
-#                      "graphql",
-#                      schema=schema,
-#                      graphiql=True
-#                  ))
 
 app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 

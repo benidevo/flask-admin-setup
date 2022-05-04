@@ -4,6 +4,9 @@ from config.database import db
 from config.settings import admin
 from .models import User
 
+class UserView(ModelView):
+    column_exclude_list = ['password']
+    column_searchable_list = ['username', 'email']
 
-admin.add_view(ModelView(User, db.session, name="users",
+admin.add_view(UserView(User, db.session, name="users",
                menu_icon_type="fa", menu_icon_value="fa-users"))
